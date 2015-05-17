@@ -4,69 +4,16 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
-
-import com.parse.Parse;
-import com.parse.ParseObject;
-import com.parse.ParseUser;
-import com.parse.SignUpCallback;
-
-import com.parse.ParseException;
 
 
 public class LoginActivity extends ActionBarActivity {
-
-    protected EditText usernameField;
-    protected EditText passwordField;
-    private Button loginButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        // Enable Local Datastore.
-        Parse.enableLocalDatastore(this);
 
-        Parse.initialize(this, "XRGu8hmElf1tVf2JdNydy5GJey5HhUJ7BKSQMAF4", "upT7cr6CUEqu2Jylx2fOUJClImfyY7N48OXJBDi5");
-
-
-        usernameField = (EditText) findViewById(R.id.usernameEditText);
-        passwordField = (EditText) findViewById(R.id.passwordEditText);
-        loginButton = (Button) findViewById(R.id.loginButton);
-
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                String username = usernameField.getText().toString();
-                String password = passwordField.getText().toString();
-
-                ParseUser user = new ParseUser();
-                user.setUsername(username);
-                user.setPassword(password);
-
-                user.signUpInBackground(new SignUpCallback() {
-                    public void done(ParseException e) {
-                        if (e == null) {
-                            // Hooray! Let them use the app now.
-                            Toast toast;
-                            toast = Toast.makeText(getApplicationContext(), "Success", Toast.LENGTH_SHORT);
-                            toast.show();
-                        } else {
-                            // Sign up didn't succeed. Look at the ParseException
-                            // to figure out what went wrong
-                            Toast toast;
-                            toast = Toast.makeText(getApplicationContext(), "Failed", Toast.LENGTH_SHORT);
-                            toast.show();
-                        }
-                    }
-                });
-            }
-        });
     }
 
     @Override
