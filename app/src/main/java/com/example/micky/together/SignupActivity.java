@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.parse.Parse;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
@@ -21,24 +20,20 @@ public class SignupActivity extends ActionBarActivity {
 
     protected EditText usernameField;
     protected EditText passwordField;
-    private Button SignupButton;
+    private Button signupButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
-        // Enable Local Datastore.
-        Parse.enableLocalDatastore(this);
-
-        Parse.initialize(this, "XRGu8hmElf1tVf2JdNydy5GJey5HhUJ7BKSQMAF4", "upT7cr6CUEqu2Jylx2fOUJClImfyY7N48OXJBDi5");
 
 
         usernameField = (EditText) findViewById(R.id.usernameEditText);
         passwordField = (EditText) findViewById(R.id.passwordEditText);
-        SignupButton = (Button) findViewById(R.id.signupButton);
+        signupButton = (Button) findViewById(R.id.signupButton);
 
-        SignupButton.setOnClickListener(new View.OnClickListener() {
+        signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 

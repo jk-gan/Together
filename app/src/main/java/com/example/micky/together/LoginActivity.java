@@ -4,15 +4,55 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import com.parse.LogInCallback;
+import com.parse.ParseException;
+import com.parse.ParseUser;
 
 
 public class LoginActivity extends ActionBarActivity {
+
+    protected EditText usernameField;
+    protected EditText passwordField;
+    protected Button loginButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        usernameField = (EditText) findViewById(R.id.usernameLoginEditText);
+        passwordField = (EditText) findViewById(R.id.passwordLoginEditText);
+        loginButton = (Button) findViewById(R.id.loginButton);
+
+        loginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String username = usernameField.getText().toString();
+                String password = passwordField.getText().toString();
+
+                ParseUser.logInInBackground(username, password, new LogInCallback() {
+                    public void done(ParseUser user, ParseException e) {
+                        if (user != null) {
+                            // Hooray! The user is logged in.
+                            Toast toast;
+                            toast = Toast.makeText(getApplicationContext(), "Login Successfully", Toast.LENGTH_SHORT);
+                            toast.show();
+                        } else {
+                            // Signup failed. Look at the ParseException to see what happened.
+                            Toast toast;
+                            toast = Toast.makeText(getApplicationContext(), "Login Failed", Toast.LENGTH_SHORT);
+                            toast.show();
+                        }
+                    }
+                });
+            }
+        });
 
     }
 
