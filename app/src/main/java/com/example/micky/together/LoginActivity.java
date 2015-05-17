@@ -1,5 +1,6 @@
 package com.example.micky.together;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -19,6 +20,7 @@ public class LoginActivity extends ActionBarActivity {
     protected EditText usernameField;
     protected EditText passwordField;
     protected Button loginButton;
+    protected Button signupButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +30,7 @@ public class LoginActivity extends ActionBarActivity {
         usernameField = (EditText) findViewById(R.id.usernameLoginEditText);
         passwordField = (EditText) findViewById(R.id.passwordLoginEditText);
         loginButton = (Button) findViewById(R.id.loginButton);
+
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,9 +43,10 @@ public class LoginActivity extends ActionBarActivity {
                     public void done(ParseUser user, ParseException e) {
                         if (user != null) {
                             // Hooray! The user is logged in.
-                            Toast toast;
-                            toast = Toast.makeText(getApplicationContext(), "Login Successfully", Toast.LENGTH_SHORT);
-                            toast.show();
+//                            Toast toast;
+//                            toast = Toast.makeText(getApplicationContext(), "Login Successfully", Toast.LENGTH_SHORT);
+//                            toast.show();
+                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
                         } else {
                             // Signup failed. Look at the ParseException to see what happened.
                             Toast toast;
@@ -53,7 +57,6 @@ public class LoginActivity extends ActionBarActivity {
                 });
             }
         });
-
     }
 
     @Override
