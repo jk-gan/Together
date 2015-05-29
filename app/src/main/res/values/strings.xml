@@ -3,4 +3,8 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_signup">Signup</string>
+    <string name="title_activity_first_page">Together</string>
+    <!--<string name="title_activity_login">Login</string>-->
+    <!--<string name="title_activity_login">Login</string>-->
 </resources>
