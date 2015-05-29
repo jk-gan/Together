@@ -36,16 +36,19 @@ public class LoginActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
 
+                // get username input and password input
                 String username = usernameField.getText().toString();
                 String password = passwordField.getText().toString();
 
+                // doing login function in backend
                 ParseUser.logInInBackground(username, password, new LogInCallback() {
                     public void done(ParseUser user, ParseException e) {
                         if (user != null) {
                             // Hooray! The user is logged in.
-//                            Toast toast;
-//                            toast = Toast.makeText(getApplicationContext(), "Login Successfully", Toast.LENGTH_SHORT);
-//                            toast.show();
+                            // redirect to main page
+                            Toast toast;
+                            toast = Toast.makeText(getApplicationContext(), "Login Successfully", Toast.LENGTH_SHORT);
+                            toast.show();
                             startActivity(new Intent(LoginActivity.this, MainActivity.class));
                         } else {
                             // Signup failed. Look at the ParseException to see what happened.
