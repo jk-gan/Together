@@ -1,8 +1,10 @@
+package trip;
 /**
  * Created by User on 16 05 2015.
  */
 
 import java.util.Calendar;
+
 public class Trip {
 
     private String destination;
@@ -11,10 +13,10 @@ public class Trip {
     private int capacity;
 
     public Trip(String destination,int time, Calendar date, int capacity){
-        this.destination=destination;
-        this.time=time;
-        this.date=date;
-        this.capacity=capacity;
+        this.destination = destination;
+        this.time = time;
+        this.date = date;
+        this.capacity = capacity;
     }
 
     private String getDestination(){
