@@ -25,12 +25,11 @@ public class LoginActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
 
+        setContentView(R.layout.activity_login);
         usernameField = (EditText) findViewById(R.id.usernameLoginEditText);
         passwordField = (EditText) findViewById(R.id.passwordLoginEditText);
         loginButton = (Button) findViewById(R.id.loginButton);
-
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,6 +60,7 @@ public class LoginActivity extends ActionBarActivity {
             }
         });
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

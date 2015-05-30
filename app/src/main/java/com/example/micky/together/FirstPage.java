@@ -22,18 +22,17 @@ public class FirstPage extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_first_page);
 
-        loginButton = (Button) findViewById(R.id.gotoLoginButton);
-        signupButton = (Button) findViewById(R.id.gotoSignupButton);
-
-//        ParseUser currentUser = ParseUser.getCurrentUser();
-//        if (currentUser != null) {
-//            // do stuff wi
-//            // call MainActivity
-//            startActivity(new Intent(FirstPage.this, MainActivity.class));
-//        } else {
-//            // show the signup or login screen
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        if (currentUser != null) {
+            // do stuff with the user
+            startActivity(new Intent(FirstPage.this, MainActivity.class));
+        } else {
+            // show the signup or login screen
+            setContentView(R.layout.activity_first_page);
+            
+            loginButton = (Button) findViewById(R.id.gotoLoginButton);
+            signupButton = (Button) findViewById(R.id.gotoSignupButton);
 
             signupButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -50,6 +49,9 @@ public class FirstPage extends ActionBarActivity {
 
                 }
             });
+        }
+
+
 //        }
     }
 
