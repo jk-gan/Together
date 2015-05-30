@@ -20,10 +20,7 @@ import android.widget.Toast;
 
 import com.parse.ParseObject;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Locale;
 
 
 public class RegisterTrip extends ActionBarActivity {
@@ -150,7 +147,7 @@ public class RegisterTrip extends ActionBarActivity {
                 tripDetails.put("description", description);
                 tripDetails.saveInBackground();
 //            } catch (ParseException e) {
-                e.printStackTrace();
+//                e.printStackTrace();
 //            }
 
             Toast.makeText(context, "Trip Created", duration).show();
