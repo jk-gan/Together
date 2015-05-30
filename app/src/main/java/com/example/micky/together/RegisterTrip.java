@@ -18,16 +18,21 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.parse.ParseObject;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 
 public class RegisterTrip extends ActionBarActivity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_trip);
-
     }
 
     @Override
@@ -99,7 +104,7 @@ public class RegisterTrip extends ActionBarActivity {
 
         public void onDateSet(DatePicker view, int year, int month, int day) {
             // Do something with the date chosen by the user
-            String date = day + "/" + month + "/" + year;
+            String date = year + "-" + month + "-" + day;
             TextView textViewDate = (TextView)findViewById(R.id.textViewSetDate);
             textViewDate.setText(date);
         }
@@ -109,42 +114,69 @@ public class RegisterTrip extends ActionBarActivity {
         newFragment.show(getFragmentManager(), "datePicker");
     }
 
-    //Button add=======================================================
+    //Button Register=======================================================
     public void add(View v) {
         Context context = getApplicationContext();
         int duration = Toast.LENGTH_SHORT;
 
-        if (empty() == true){
-            Toast.makeText(context,"Please all empty fields", duration).show();
-        }
-        else
-            Toast.makeText(context, "Trip Created", duration).show();
-
-    }
-
-    public boolean empty(){
-        EditText editText[] = new EditText[4];
-        editText[0] = (EditText)findViewById(R.id.editTextFrom);
-        editText[1] = (EditText)findViewById(R.id.editTextTo);
-        editText[2] = (EditText)findViewById(R.id.editTextCapacity);
-        editText[3] = (EditText)findViewById(R.id.editTextDescription);
+        EditText editTextFrom = (EditText)findViewById(R.id.editTextFrom);
+        EditText editTextTo = (EditText)findViewById(R.id.editTextTo);
+        EditText editTextCapacity = (EditText)findViewById(R.id.editTextCapacity);
+        EditText editTextDescription = (EditText)findViewById(R.id.editTextDescription);
         TextView textViewDate = (TextView)findViewById(R.id.textViewSetDate);
         TextView textViewTime = (TextView)findViewById(R.id.textViewSetTime);
 
-        int count = 0;
-        for (int index = 0 ; index < editText.length ; index++) {
+        String date = textViewDate.getText().toString();
+        String time = textViewTime.getText().toString();
+        String from = editTextFrom.getText().toString();
+        String to = editTextTo.getText().toString();
+        String capacity = editTextCapacity.getText().toString();
+        String description = editTextDescription.getText().toString();
 
-            if ((editText[index].getText().toString().length() == 0) ||
-                    (textViewDate.toString().equalsIgnoreCase("Set")) ||
-                    (textViewTime.toString().equalsIgnoreCase("Set"))) {
-                count ++;
-            } else
-                continue;
+        if (empty() == true){
+            Toast.makeText(context,"Please fill all empty fields", duration).show();
         }
+        else {
 
-        if (count != 0)
+//            try {
+//                String dateTime = (date + " " + time);
+//                SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd kk:mm",Locale.ENGLISH);
+                ParseObject tripDetails = new ParseObject("Trip");
+//                tripDetails.put("tripDate", df.parse(dateTime));
+                tripDetails.put("tripDate", date+","+time);
+                tripDetails.put("from", from);
+                tripDetails.put("to", to);
+                tripDetails.put("capacity", capacity);
+                tripDetails.put("description", description);
+                tripDetails.saveInBackground();
+//            } catch (ParseException e) {
+                e.printStackTrace();
+//            }
+
+            Toast.makeText(context, "Trip Created", duration).show();
+        }
+    }
+
+    //Verify fields===================================================
+
+
+    public boolean empty() {
+
+        EditText editTextFrom = (EditText)findViewById(R.id.editTextFrom);
+        EditText editTextTo = (EditText)findViewById(R.id.editTextTo);
+        EditText editTextCapacity = (EditText)findViewById(R.id.editTextCapacity);
+        EditText editTextDescription = (EditText)findViewById(R.id.editTextDescription);
+        TextView textViewDate = (TextView)findViewById(R.id.textViewSetDate);
+        TextView textViewTime = (TextView)findViewById(R.id.textViewSetTime);
+
+        if ((editTextFrom.getText().length() == 0) ||
+                (editTextTo.getText().length() == 0) ||
+                (editTextDescription.getText().length() == 0) ||
+                (editTextCapacity.getText().length() == 0) ||
+                (textViewDate.getText().toString().equalsIgnoreCase("Set")) ||
+                (textViewTime.getText().toString().equalsIgnoreCase("Set"))) {
             return true;
-        else
+        } else
             return false;
     }
 }
