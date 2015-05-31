@@ -1,5 +1,6 @@
 package com.example.micky.together;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -39,18 +40,25 @@ public class LoginActivity extends ActionBarActivity {
                 String username = usernameField.getText().toString();
                 String password = passwordField.getText().toString();
 
+                final ProgressDialog dialog=new ProgressDialog(LoginActivity.this);
+                dialog.setMessage("Loading");
+                dialog.setCancelable(false);
+                dialog.setInverseBackgroundForced(false);
+                dialog.show();
                 // doing login function in backend
                 ParseUser.logInInBackground(username, password, new LogInCallback() {
                     public void done(ParseUser user, ParseException e) {
                         if (user != null) {
                             // Hooray! The user is logged in.
                             // redirect to main page
+                            dialog.dismiss();
                             Toast toast;
                             toast = Toast.makeText(getApplicationContext(), "Login Successfully", Toast.LENGTH_SHORT);
                             toast.show();
                             startActivity(new Intent(LoginActivity.this, MainActivity.class));
                         } else {
                             // Signup failed. Look at the ParseException to see what happened.
+                            dialog.dismiss();
                             Toast toast;
                             toast = Toast.makeText(getApplicationContext(), "Login Failed", Toast.LENGTH_SHORT);
                             toast.show();
