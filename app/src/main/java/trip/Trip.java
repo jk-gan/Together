@@ -20,7 +20,7 @@ public class Trip {
 
 
 
-    public Trip(String description, String tripID){
+    public Trip(String destination, String description){
         this.tripID = tripID;
         this.description = description;
         this.destination = destination;
