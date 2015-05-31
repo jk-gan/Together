@@ -30,7 +30,7 @@ public class FirstPage extends ActionBarActivity {
         } else {
             // show the signup or login screen
             setContentView(R.layout.activity_first_page);
-            
+
             loginButton = (Button) findViewById(R.id.gotoLoginButton);
             signupButton = (Button) findViewById(R.id.gotoSignupButton);
 
