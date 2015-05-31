@@ -6,6 +6,8 @@
     <string name="title_activity_signup">Signup</string>
     <string name="title_activity_first_page">Together</string>
     <string name="title_activity_display">DisplayActivity</string>
+    <string name="namelabel">"Name : "</string>
+    <string name="title_activity_single_item_view">Trip</string>
     <!--<string name="title_activity_login">Login</string>-->
     <!--<string name="title_activity_login">Login</string>-->
 </resources>
