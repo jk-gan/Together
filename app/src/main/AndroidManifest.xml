@@ -39,11 +39,15 @@
         </activity>
         <activity
             android:name=".SingleItemView"
-            android:label="@string/title_activity_single_item_view" >
+            android:label="@string/title_activity_single_item_view">
         </activity>
         <activity
             android:name=".MyActivity"
-            android:label="@string/title_activity_my" >
+            android:label="@string/title_activity_my">
+        </activity>
+        <activity
+            android:name=".RegisterTrip"
+            android:label="@string/title_activity_register_trip" >
         </activity>
     </application>
 
