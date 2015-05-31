@@ -1,8 +1,8 @@
 package com.example.micky.together;
 
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -49,6 +49,9 @@ public class LoginActivity extends ActionBarActivity {
                             Toast toast;
                             toast = Toast.makeText(getApplicationContext(), "Login Successfully", Toast.LENGTH_SHORT);
                             toast.show();
+                            //get user id
+                            String objectId = user.getString("objectId");
+
                             startActivity(new Intent(LoginActivity.this, MainActivity.class));
                         } else {
                             // Signup failed. Look at the ParseException to see what happened.

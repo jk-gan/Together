@@ -101,9 +101,10 @@ public class RegisterTrip extends ActionBarActivity {
 
         public void onDateSet(DatePicker view, int year, int month, int day) {
             // Do something with the date chosen by the user
-            String date = year + "-" + month + "-" + day;
+            String date = day + "/" + month + "/" + year;
             TextView textViewDate = (TextView)findViewById(R.id.textViewSetDate);
             textViewDate.setText(date);
+
         }
     }
     public void showDatePickerDialog(View v) {
@@ -135,22 +136,18 @@ public class RegisterTrip extends ActionBarActivity {
         }
         else {
 
-//            try {
-//                String dateTime = (date + " " + time);
-//                SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd kk:mm",Locale.ENGLISH);
-                ParseObject tripDetails = new ParseObject("Trip");
-//                tripDetails.put("tripDate", df.parse(dateTime));
-                tripDetails.put("tripDate", date+","+time);
-                tripDetails.put("from", from);
-                tripDetails.put("to", to);
-                tripDetails.put("capacity", capacity);
-                tripDetails.put("description", description);
-                tripDetails.saveInBackground();
-//            } catch (ParseException e) {
-//                e.printStackTrace();
-//            }
+            String dateTime = date+" "+time;
+            ParseObject tripDetails = new ParseObject("Trip");
+            tripDetails.put("tripDate", dateTime);
+            tripDetails.put("from", from);
+            tripDetails.put("to", to);
+            tripDetails.put("capacity", capacity);
+            tripDetails.put("description", description);
+            tripDetails.saveInBackground();
 
             Toast.makeText(context, "Trip Created", duration).show();
+            //Go to next activity
+
         }
     }
 
