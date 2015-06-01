@@ -84,8 +84,8 @@ public class SingleItemView extends ActionBarActivity {
         query.whereEqualTo("userID", userID);
         query.whereEqualTo("tripID", tripID);
         query.findInBackground(new FindCallback<ParseObject>() {
-            public void done(List<ParseObject> user, ParseException e) {
-                if (user.size() == 0) {
+            public void done(final List<ParseObject> users, ParseException e) {
+                if (users.size() == 0) {
                     // set button to be visible
                     joinTripButton.setVisibility(View.VISIBLE);
                     joinTripButton.setOnClickListener(new View.OnClickListener() {
@@ -128,24 +128,17 @@ public class SingleItemView extends ActionBarActivity {
                     cancelTripButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            ParseQuery<ParseObject> query = ParseQuery.getQuery("Request");
-                            query.whereEqualTo("userID", userID);
-                            query.whereEqualTo("tripID", tripID);
-                            query.findInBackground(new FindCallback<ParseObject>() {
-                                public void done(List<ParseObject> users, ParseException e) {
-                                    if (users.size() != 0) {
-                                        users.get(0).deleteInBackground();
-                                        Toast toast;
-                                        Intent intent = getIntent();
-                                        finish();
-                                        startActivity(intent);
-                                        toast = Toast.makeText(
-                                                getApplicationContext(),
-                                                "You had canceled for this trip", Toast.LENGTH_SHORT);
-                                        toast.show();
-                                    }
-                                }
-                            });
+
+                            users.get(0).deleteInBackground();
+                            Toast toast;
+                            Intent intent = getIntent();
+                            finish();
+                            startActivity(intent);
+                            toast = Toast.makeText(
+                                    getApplicationContext(),
+                                    "You had canceled for this trip", Toast.LENGTH_SHORT);
+                            toast.show();
+
                         }
                     });
                 }
