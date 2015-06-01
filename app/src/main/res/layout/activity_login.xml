@@ -15,7 +15,9 @@
         android:layout_marginTop="139dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:hint="username" />
+        android:hint="username"
+        android:editable="true"
+        android:enabled="true" />
 
     <EditText
         android:layout_width="match_parent"
@@ -27,7 +29,9 @@
         android:layout_below="@+id/usernameLoginEditText"
         android:layout_alignLeft="@+id/usernameLoginEditText"
         android:layout_alignStart="@+id/usernameLoginEditText"
-        android:hint="password" />
+        android:hint="password"
+        android:enabled="true"
+        android:editable="true" />
 
     <Button
         android:layout_width="match_parent"
@@ -37,5 +41,15 @@
         android:layout_below="@+id/passwordLoginEditText"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="65dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="timer"
+        android:id="@+id/timerTextView"
+        android:layout_alignTop="@+id/loginButton"
+        android:layout_centerHorizontal="true"
+        android:visibility="invisible" />
 
 </RelativeLayout>
