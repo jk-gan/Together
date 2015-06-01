@@ -21,9 +21,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.micky.together.R;
+import com.parse.ParseException;
+import com.parse.ParseInstallation;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
@@ -38,12 +41,13 @@ public class SingleItemView extends ActionBarActivity {
     private String name;
     private String from;
     private String to;
-    private String ownerID;
     private int capacity;
     private String userID;
     private String tripID;
     protected Button joinTripButton;
     protected Button cancelTripButton;
+    private String tripOwnerID;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -60,8 +64,8 @@ public class SingleItemView extends ActionBarActivity {
         from = i.getStringExtra("from");
         to = i.getStringExtra("to");
         capacity = i.getIntExtra("capacity", 0);
+        tripOwnerID = i.getStringExtra("tripOwnerID");
         userID = ParseUser.getCurrentUser().getObjectId();
-        ownerID = i.getStringExtra("ownerID");
 
         // Locate the TextView in singleitemview.xml
         txtname = (TextView) findViewById(R.id.nameTextView2);
@@ -75,7 +79,7 @@ public class SingleItemView extends ActionBarActivity {
         txtFrom.setText(from);
         txtCapacity.setText("" + capacity);
 
-        if(!userID.equals(ownerID)) {
+        if(!userID.equals(tripOwnerID)) {
             // Join button
             joinTripButton = (Button) findViewById(R.id.joinButton);
 
@@ -118,12 +122,25 @@ public class SingleItemView extends ActionBarActivity {
 //                    dialog.show();
                                     request.saveInBackground();
 //                    dialog.dismiss();
+
                                     Toast toast;
                                     Intent intent = getIntent();
                                     finish();
                                     startActivity(intent);
                                     toast = Toast.makeText(getApplicationContext(), "Join Successfully", Toast.LENGTH_SHORT);
                                     toast.show();
+                                    ParseQuery pushQuery = ParseInstallation.getQuery();
+                                    pushQuery.whereEqualTo("userID", tripOwnerID);
+
+                                    // Send push notification to query
+                                    ParsePush push = new ParsePush();
+                                    push.setQuery(pushQuery); // Set our Installation query
+                                    push.setMessage(ParseUser.getCurrentUser().getUsername() + " request to join your trip.");
+                                    try {
+                                        push.send();
+                                    } catch (ParseException e) {
+                                        e.printStackTrace();
+                                    }
                                 }
                             }
                         });

@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.parse.LogInCallback;
 import com.parse.ParseException;
+import com.parse.ParseInstallation;
 import com.parse.ParseUser;
 
 
@@ -80,39 +81,41 @@ public class LoginActivity extends ActionBarActivity {
                         Toast.makeText(getApplicationContext(),"Please fill all empty fields",Toast.LENGTH_SHORT).show();
                         count++;
                     }
-                    else{
+                    else {
                         //check username space
-                        for(int index = 0 ; index < username.length() ; index++){
-                            if (username.charAt(index) == ' '){
-                                Toast.makeText(getApplicationContext(),"Username cannot contains spaces",Toast.LENGTH_SHORT).show();
+                        for (int index = 0; index < username.length(); index++) {
+                            if (username.charAt(index) == ' ') {
+                                Toast.makeText(getApplicationContext(), "Username cannot contains spaces", Toast.LENGTH_SHORT).show();
                                 count++;
                                 break;
-                            }
-                            else if (index == username.length()-1){
-                                final ProgressDialog dialog=new ProgressDialog(LoginActivity.this);
+                            } else if (index == username.length() - 1) {
+
+                                final ProgressDialog dialog = new ProgressDialog(LoginActivity.this);
                                 dialog.setMessage("Loging in");
                                 dialog.setCancelable(false);
                                 dialog.setInverseBackgroundForced(false);
                                 dialog.show();
                                 // doing login function in backend
                                 ParseUser.logInInBackground(username, password, new LogInCallback() {
-
                                     public void done(ParseUser user, ParseException e) {
                                         if (user != null) {
                                             // Hooray! The user is logged in.
-                                            // redirect to main page.
+                                            // redirect to main page
                                             dialog.dismiss();
-                                            count = 0;
+                                            // Associate the device with a user
+                                            ParseInstallation installation = ParseInstallation.getCurrentInstallation();
+                                            installation.put("userID", ParseUser.getCurrentUser().getObjectId());
+                                            installation.saveInBackground();
                                             startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                                            toast = Toast.makeText(getApplicationContext(), "Login Successfully", Toast.LENGTH_SHORT);
+                                            Toast toast;
+                                            toast = Toast.makeText(getApplicationContext(), "Welcome", Toast.LENGTH_SHORT);
                                             toast.show();
-                                        }
-                                        else {
+                                        } else {
                                             // Signup failed. Look at the ParseException to see what happened.
                                             dialog.dismiss();
-                                            toast = Toast.makeText(getApplicationContext(), "Wrong Username or Password", Toast.LENGTH_SHORT);
+                                            Toast toast;
+                                            toast = Toast.makeText(getApplicationContext(), "Login Failed", Toast.LENGTH_SHORT);
                                             toast.show();
-                                            count++;
                                         }
                                     }
                                 });
