@@ -32,7 +32,6 @@ public class MainActivity extends ActionBarActivity {
     ListView listview;
     List<ParseObject> ob;
     ProgressDialog mProgressDialog;
-    ArrayAdapter<String> adapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -123,9 +122,8 @@ public class MainActivity extends ActionBarActivity {
                     i.putExtra("owner", ob.get(position).getString("owner"));
                     i.putExtra("from", ob.get(position).getString("from"));
                     i.putExtra("to", ob.get(position).getString("to"));
-                    i.putExtra("capacity", ob.get(position).getString("capacity"));
-                    //send the username
-                    i.putExtra("username", "cool");
+                    i.putExtra("tripID", ob.get(position).getObjectId());
+                    i.putExtra("capacity", ob.get(position).getInt("defaultCapacity"));
                     // Open SingleItemView.java Activity
                     startActivity(i);
                 }
@@ -134,7 +132,7 @@ public class MainActivity extends ActionBarActivity {
 
         private ArrayList<Trip> generateData() {
             for (ParseObject trip : ob) {
-                trips.add(new Trip((String)trip.get("to"), (String)trip.get("description")));
+                trips.add(new Trip((String)trip.get("to"), (String)trip.get("description"), (String)trip.get("objectId")));
 //                adapter.add((String) trip.get("to"));
             }
             return trips;

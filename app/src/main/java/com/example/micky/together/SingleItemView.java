@@ -26,14 +26,15 @@ import com.parse.ParseUser;
 
 public class SingleItemView extends ActionBarActivity {
     // Declare Variables
-    TextView txtname;
-    TextView txtTo;
-    TextView txtFrom;
-    String name;
-    String from;
-    String to;
-    String capacity;
-    String username;
+    private TextView txtname;
+    private TextView txtTo;
+    private TextView txtFrom;
+    private String name;
+    private String from;
+    private String to;
+    private int capacity;
+    private String userID;
+    private String tripID;
     protected Button joinTripButton;
 
     @Override
@@ -45,12 +46,13 @@ public class SingleItemView extends ActionBarActivity {
         // Retrieve data from MainActivity on item click event
         Intent i = getIntent();
 
-        // Get the name
+        // Get the data
+        tripID = i.getStringExtra("tripID");
         name = i.getStringExtra("owner");
         from = i.getStringExtra("from");
         to = i.getStringExtra("to");
-        capacity = i.getStringExtra("capacity");
-        username = i.getStringExtra("username");
+        capacity = i.getIntExtra("capacity", 0);
+        userID = ParseUser.getCurrentUser().getObjectId();
 
         // Locate the TextView in singleitemview.xml
         txtname = (TextView) findViewById(R.id.nameTextView2);
@@ -71,27 +73,28 @@ public class SingleItemView extends ActionBarActivity {
 
                 //joining process
                 //Check the capacity first
-                if(Integer.parseInt(capacity) == 0)
+                if(capacity <= 0)
                 {
                     Toast toast;
-                    toast = Toast.makeText(getApplicationContext(), "Sorry, Seat is Full", Toast.LENGTH_SHORT);
+                    toast = Toast.makeText(getApplicationContext(), "Sorry, the car is Full", Toast.LENGTH_SHORT);
                     toast.show();
                 }
                 else
                 {
                     //create new join request
                     ParseObject request = new ParseObject("Request");
-                    request.put("tripID", "001");
-                    request.put("userName", username);
-                    // 0 = reject, 1 = pending, 2 = accept
-                    request.put("status", 1);
-                    final ProgressDialog dialog=new ProgressDialog(SingleItemView.this);
-                    dialog.setMessage("Loading");
-                    dialog.setCancelable(false);
-                    dialog.setInverseBackgroundForced(false);
-                    dialog.show();
+                    request.put("userID", userID);
+                    request.put("tripID", tripID);
+//                    // status = "rejected", "pending", "accepted"
+                    request.put("status", "pending");
+
+//                    final ProgressDialog dialog = new ProgressDialog(SingleItemView.this);
+//                    dialog.setMessage("Loading");
+//                    dialog.setCancelable(false);
+//                    dialog.setInverseBackgroundForced(false);
+//                    dialog.show();
                     request.saveInBackground();
-                    dialog.dismiss();
+//                    dialog.dismiss();
                     Toast toast;
                     toast = Toast.makeText(getApplicationContext(), "Join Successfully", Toast.LENGTH_SHORT);
                     toast.show();
