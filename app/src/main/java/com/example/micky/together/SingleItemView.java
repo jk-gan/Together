@@ -12,6 +12,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,8 +21,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.micky.together.R;
+import com.parse.FindCallback;
+import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
+
+import java.util.List;
 
 
 public class SingleItemView extends ActionBarActivity {
@@ -67,36 +73,54 @@ public class SingleItemView extends ActionBarActivity {
         // Join button
         joinTripButton = (Button) findViewById(R.id.joinButton);
 
-        joinTripButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        // SELECT * FROM Request WHERE userID = userID AND tripID = tripID
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Request");
+        query.whereEqualTo("userID", userID);
+        query.whereEqualTo("tripID", tripID);
+        query.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> user, ParseException e) {
+                if (user.size() == 0) {
+                    // set button to be visible
+                    joinTripButton.setVisibility(View.VISIBLE);
+                    joinTripButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
 
-                //joining process
-                //Check the capacity first
-                if(capacity <= 0)
-                {
-                    Toast toast;
-                    toast = Toast.makeText(getApplicationContext(), "Sorry, the car is Full", Toast.LENGTH_SHORT);
-                    toast.show();
-                }
-                else
-                {
-                    //create new join request
-                    ParseObject request = new ParseObject("Request");
-                    request.put("userID", userID);
-                    request.put("tripID", tripID);
+                            //joining process
+                            //Check the capacity first
+                            if (capacity <= 0) {
+                                Toast toast;
+                                toast = Toast.makeText(getApplicationContext(), "Sorry, the car is Full", Toast.LENGTH_SHORT);
+                                toast.show();
+                            } else {
+                                //create new join request
+                                ParseObject request = new ParseObject("Request");
+                                request.put("userID", userID);
+                                request.put("tripID", tripID);
 //                    // status = "rejected", "pending", "accepted"
-                    request.put("status", "pending");
+                                request.put("status", "pending");
 
 //                    final ProgressDialog dialog = new ProgressDialog(SingleItemView.this);
 //                    dialog.setMessage("Loading");
 //                    dialog.setCancelable(false);
 //                    dialog.setInverseBackgroundForced(false);
 //                    dialog.show();
-                    request.saveInBackground();
+                                request.saveInBackground();
 //                    dialog.dismiss();
+                                Toast toast;
+                                toast = Toast.makeText(getApplicationContext(), "Join Successfully", Toast.LENGTH_SHORT);
+                                toast.show();
+
+                                Intent intent = getIntent();
+                                finish();
+                                startActivity(intent);
+                            }
+                        }
+                    });
+
+                } else {
                     Toast toast;
-                    toast = Toast.makeText(getApplicationContext(), "Join Successfully", Toast.LENGTH_SHORT);
+                    toast = Toast.makeText(getApplicationContext(), "You had requested for this trip", Toast.LENGTH_SHORT);
                     toast.show();
                 }
             }
