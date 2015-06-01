@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.parse.LogInCallback;
 import com.parse.ParseException;
+import com.parse.ParseInstallation;
 import com.parse.ParseUser;
 
 
@@ -26,6 +27,9 @@ public class FirstPage extends ActionBarActivity {
         ParseUser currentUser = ParseUser.getCurrentUser();
         if (currentUser != null) {
             // do stuff with the user
+            ParseInstallation installation = ParseInstallation.getCurrentInstallation();
+            installation.put("userID", ParseUser.getCurrentUser().getObjectId());
+            installation.saveInBackground();
             startActivity(new Intent(FirstPage.this, MainActivity.class));
         } else {
             // show the signup or login screen
