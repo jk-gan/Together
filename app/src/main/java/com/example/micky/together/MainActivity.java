@@ -1,26 +1,20 @@
 package com.example.micky.together;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.parse.Parse;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -137,7 +131,10 @@ public class MainActivity extends ActionBarActivity {
             }
             return trips;
         }
+    }
 
-
+    public void onClick(View view) {
+        Intent intent = new Intent(this, RegisterTrip.class);
+        startActivity(intent);
     }
 }

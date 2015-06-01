@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.format.DateFormat;
@@ -147,7 +148,8 @@ public class RegisterTrip extends ActionBarActivity {
 
             Toast.makeText(context, "Trip Created", duration).show();
             //Go to next activity
-
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
         }
     }
 
