@@ -42,7 +42,7 @@ public class LoginActivity extends ActionBarActivity {
                 String password = passwordField.getText().toString();
 
                 final ProgressDialog dialog=new ProgressDialog(LoginActivity.this);
-                dialog.setMessage("Loading");
+                dialog.setMessage("Loging in");
                 dialog.setCancelable(false);
                 dialog.setInverseBackgroundForced(false);
                 dialog.show();
@@ -54,7 +54,7 @@ public class LoginActivity extends ActionBarActivity {
                             // redirect to main page
                             dialog.dismiss();
                             Toast toast;
-                            toast = Toast.makeText(getApplicationContext(), "Login Successfully", Toast.LENGTH_SHORT);
+                            toast = Toast.makeText(getApplicationContext(), "Welcome", Toast.LENGTH_SHORT);
                             toast.show();
                             // Associate the device with a user
                             ParseInstallation installation = ParseInstallation.getCurrentInstallation();

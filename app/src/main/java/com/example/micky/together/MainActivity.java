@@ -32,7 +32,6 @@ public class MainActivity extends ActionBarActivity {
     ListView listview;
     List<ParseObject> ob;
     ProgressDialog mProgressDialog;
-    ArrayAdapter<String> adapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -104,13 +103,9 @@ public class MainActivity extends ActionBarActivity {
             // Locate the listview in listview_main.xml
             listview = (ListView) findViewById(R.id.listview);
             // Pass the results into an ArrayAdapter
-            adapter = new ArrayAdapter<String>(MainActivity.this,
-                    R.layout.listview_item);
+            MyAdapter adapter = new MyAdapter(MainActivity.this, generateData());
             // Retrieve object "description" from Parse.com database
-            for (ParseObject trip : ob) {
-                trips.add(new Trip((String)trip.get("description"), (String)trip.get("objectId")));
-                adapter.add((String) trip.get("to"));
-            }
+
             // Binds the Adapter to the ListView
             listview.setAdapter(adapter);
             // Close the progressdialog
@@ -127,16 +122,21 @@ public class MainActivity extends ActionBarActivity {
                     i.putExtra("owner", ob.get(position).getString("owner"));
                     i.putExtra("from", ob.get(position).getString("from"));
                     i.putExtra("to", ob.get(position).getString("to"));
-                    i.putExtra("capacity", ob.get(position).getString("capacity"));
-                    //send the username
-                    i.putExtra("username", "cool");
+                    i.putExtra("tripID", ob.get(position).getObjectId());
+                    i.putExtra("capacity", ob.get(position).getInt("defaultCapacity"));
                     // Open SingleItemView.java Activity
                     startActivity(i);
                 }
             });
         }
 
-
+        private ArrayList<Trip> generateData() {
+            for (ParseObject trip : ob) {
+                trips.add(new Trip((String)trip.get("to"), (String)trip.get("description"), (String)trip.get("objectId")));
+//                adapter.add((String) trip.get("to"));
+            }
+            return trips;
+        }
 
 
     }

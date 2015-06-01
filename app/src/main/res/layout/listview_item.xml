@@ -1,9 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/text"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:padding="5sp"
-    android:textSize="25sp" >
+    android:layout_height="wrap_content"
+    >
 
-</TextView>
+
+
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="23sp"
+        android:paddingLeft="30dp"
+        android:paddingTop="2dp"
+        android:textColor="@color/primary_text">
+    </TextView>
+
+    <TextView
+        android:id="@+id/value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text"
+        android:textSize="15sp"
+        android:paddingLeft="30dp"
+        android:paddingBottom="10dp"
+        android:textColor="@color/secondary_text"
+        >
+    </TextView>
+</RelativeLayout>
