@@ -124,6 +124,7 @@ public class MainActivity extends ActionBarActivity {
                     i.putExtra("to", ob.get(position).getString("to"));
                     i.putExtra("tripID", ob.get(position).getObjectId());
                     i.putExtra("capacity", ob.get(position).getInt("defaultCapacity"));
+                    i.putExtra("tripOwnerID", ob.get(position).getString("userId"));
                     // Open SingleItemView.java Activity
                     startActivity(i);
                 }

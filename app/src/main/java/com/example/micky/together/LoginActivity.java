@@ -58,7 +58,7 @@ public class LoginActivity extends ActionBarActivity {
                             toast.show();
                             // Associate the device with a user
                             ParseInstallation installation = ParseInstallation.getCurrentInstallation();
-                            installation.put("userID", ParseUser.getCurrentUser());
+                            installation.put("userID", ParseUser.getCurrentUser().getObjectId());
                             installation.saveInBackground();
                             startActivity(new Intent(LoginActivity.this, MainActivity.class));
                         } else {

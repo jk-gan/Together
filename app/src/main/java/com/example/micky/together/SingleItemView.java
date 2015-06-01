@@ -44,6 +44,7 @@ public class SingleItemView extends ActionBarActivity {
     private String userID;
     private String tripID;
     protected Button joinTripButton;
+    private String tripOwnerID;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -60,6 +61,7 @@ public class SingleItemView extends ActionBarActivity {
         from = i.getStringExtra("from");
         to = i.getStringExtra("to");
         capacity = i.getIntExtra("capacity", 0);
+        tripOwnerID = i.getStringExtra("tripOwnerID");
         userID = ParseUser.getCurrentUser().getObjectId();
 
         // Locate the TextView in singleitemview.xml
@@ -109,6 +111,21 @@ public class SingleItemView extends ActionBarActivity {
 //                    dialog.show();
                                 request.saveInBackground();
 //                    dialog.dismiss();
+
+                                // Create check Installation query to specify user
+                                ParseQuery pushQuery = ParseInstallation.getQuery();
+                                pushQuery.whereEqualTo("userID", tripOwnerID);
+
+                                // Send push notification to query
+                                ParsePush push = new ParsePush();
+                                push.setQuery(pushQuery); // Set our Installation query
+                                push.setMessage(ParseUser.getCurrentUser().getUsername() + " request to join your trip.");
+                                try {
+                                    push.send();
+                                } catch (ParseException e) {
+                                    e.printStackTrace();
+                                }
+
                                 Toast toast;
                                 toast = Toast.makeText(getApplicationContext(), "Join Successfully", Toast.LENGTH_SHORT);
                                 toast.show();
@@ -125,46 +142,6 @@ public class SingleItemView extends ActionBarActivity {
                     toast = Toast.makeText(getApplicationContext(), "You had requested for this trip", Toast.LENGTH_SHORT);
                     toast.show();
                 }
-                // Create our Installation query
-                ParseQuery pushQuery = ParseInstallation.getQuery();
-                pushQuery.whereEqualTo("userID", ParseUser.getCurrentUser());
-
-                // Send push notification to query
-                ParsePush push = new ParsePush();
-                push.setQuery(pushQuery); // Set our Installation query
-                push.setMessage("12345");
-                try {
-                    push.send();
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                Toast toast;
-                toast = Toast.makeText(getApplicationContext(), "Done", Toast.LENGTH_SHORT);
-                toast.show();
-                //joining process
-                //Check the capacity first
-                //if (Integer.parseInt(capacity) == 0) {
-                //   Toast toast;
-                //    toast = Toast.makeText(getApplicationContext(), "Sorry, Seat is Full", Toast.LENGTH_SHORT);
-                //    toast.show();
-                //} else {
-                    //create new join request
-                //    ParseObject request = new ParseObject("Request");
-                //    request.put("tripID", "001");
-                //    request.put("userName", username);
-                //    // 0 = reject, 1 = pending, 2 = accept
-                //    request.put("status", 1);
-                //    final ProgressDialog dialog = new ProgressDialog(SingleItemView.this);
-                //    dialog.setMessage("Loading");
-                //    dialog.setCancelable(false);
-                //    dialog.setInverseBackgroundForced(false);
-                //    dialog.show();
-                //    request.saveInBackground();
-                //    dialog.dismiss();
-                //    Toast toast;
-                //    toast = Toast.makeText(getApplicationContext(), "Join Successfully", Toast.LENGTH_SHORT);
-                //    toast.show();
-                //}
             }
         });
 
