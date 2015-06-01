@@ -20,6 +20,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.parse.ParseObject;
+import com.parse.ParseUser;
 
 import java.util.Calendar;
 
@@ -139,10 +140,13 @@ public class RegisterTrip extends ActionBarActivity {
 
             String dateTime = date+" "+time;
             ParseObject tripDetails = new ParseObject("Trip");
+            tripDetails.put("userId", ParseUser.getCurrentUser().getObjectId());
+            tripDetails.put("owner", ParseUser.getCurrentUser().getUsername());
             tripDetails.put("tripDate", dateTime);
             tripDetails.put("from", from);
             tripDetails.put("to", to);
-            tripDetails.put("capacity", capacity);
+            tripDetails.put("defaultCapacity", capacity);
+            tripDetails.put("remainCapacity",capacity);
             tripDetails.put("description", description);
             tripDetails.saveInBackground();
 
