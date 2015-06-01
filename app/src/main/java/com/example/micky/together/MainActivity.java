@@ -128,6 +128,8 @@ public class MainActivity extends ActionBarActivity {
                     i.putExtra("from", ob.get(position).getString("from"));
                     i.putExtra("to", ob.get(position).getString("to"));
                     i.putExtra("capacity", ob.get(position).getString("capacity"));
+                    //send the username
+                    i.putExtra("username", "cool");
                     // Open SingleItemView.java Activity
                     startActivity(i);
                 }

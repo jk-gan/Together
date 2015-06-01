@@ -66,4 +66,13 @@
         android:layout_alignTop="@+id/textView5"
         android:layout_alignLeft="@+id/fromTextView2"
         android:layout_alignStart="@+id/fromTextView2" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Join"
+        android:id="@+id/joinButton"
+        android:layout_marginBottom="55dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>
