@@ -20,7 +20,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.micky.together.R;
+import com.parse.ParseException;
+import com.parse.ParseInstallation;
 import com.parse.ParseObject;
+import com.parse.ParsePush;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 
@@ -69,33 +73,46 @@ public class SingleItemView extends ActionBarActivity {
             @Override
             public void onClick(View v) {
 
+                // Create our Installation query
+                ParseQuery pushQuery = ParseInstallation.getQuery();
+                pushQuery.whereEqualTo("userID", ParseUser.getCurrentUser());
+
+                // Send push notification to query
+                ParsePush push = new ParsePush();
+                push.setQuery(pushQuery); // Set our Installation query
+                push.setMessage("12345");
+                try {
+                    push.send();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                Toast toast;
+                toast = Toast.makeText(getApplicationContext(), "Done", Toast.LENGTH_SHORT);
+                toast.show();
                 //joining process
                 //Check the capacity first
-                if(Integer.parseInt(capacity) == 0)
-                {
-                    Toast toast;
-                    toast = Toast.makeText(getApplicationContext(), "Sorry, Seat is Full", Toast.LENGTH_SHORT);
-                    toast.show();
-                }
-                else
-                {
+                //if (Integer.parseInt(capacity) == 0) {
+                //   Toast toast;
+                //    toast = Toast.makeText(getApplicationContext(), "Sorry, Seat is Full", Toast.LENGTH_SHORT);
+                //    toast.show();
+                //} else {
                     //create new join request
-                    ParseObject request = new ParseObject("Request");
-                    request.put("tripID", "001");
-                    request.put("userName", username);
-                    // 0 = reject, 1 = pending, 2 = accept
-                    request.put("status", 1);
-                    final ProgressDialog dialog=new ProgressDialog(SingleItemView.this);
-                    dialog.setMessage("Loading");
-                    dialog.setCancelable(false);
-                    dialog.setInverseBackgroundForced(false);
-                    dialog.show();
-                    request.saveInBackground();
-                    dialog.dismiss();
-                    Toast toast;
-                    toast = Toast.makeText(getApplicationContext(), "Join Successfully", Toast.LENGTH_SHORT);
-                    toast.show();
-                }
+                //    ParseObject request = new ParseObject("Request");
+                //    request.put("tripID", "001");
+                //    request.put("userName", username);
+                //    // 0 = reject, 1 = pending, 2 = accept
+                //    request.put("status", 1);
+                //    final ProgressDialog dialog = new ProgressDialog(SingleItemView.this);
+                //    dialog.setMessage("Loading");
+                //    dialog.setCancelable(false);
+                //    dialog.setInverseBackgroundForced(false);
+                //    dialog.show();
+                //    request.saveInBackground();
+                //    dialog.dismiss();
+                //    Toast toast;
+                //    toast = Toast.makeText(getApplicationContext(), "Join Successfully", Toast.LENGTH_SHORT);
+                //    toast.show();
+                //}
             }
         });
 

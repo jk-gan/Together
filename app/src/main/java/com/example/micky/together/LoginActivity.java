@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.parse.LogInCallback;
 import com.parse.ParseException;
+import com.parse.ParseInstallation;
 import com.parse.ParseUser;
 
 
@@ -55,6 +56,10 @@ public class LoginActivity extends ActionBarActivity {
                             Toast toast;
                             toast = Toast.makeText(getApplicationContext(), "Login Successfully", Toast.LENGTH_SHORT);
                             toast.show();
+                            // Associate the device with a user
+                            ParseInstallation installation = ParseInstallation.getCurrentInstallation();
+                            installation.put("userID", ParseUser.getCurrentUser());
+                            installation.saveInBackground();
                             startActivity(new Intent(LoginActivity.this, MainActivity.class));
                         } else {
                             // Signup failed. Look at the ParseException to see what happened.
