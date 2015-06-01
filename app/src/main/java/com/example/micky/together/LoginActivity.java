@@ -102,10 +102,10 @@ public class LoginActivity extends ActionBarActivity {
                                             // Hooray! The user is logged in.
                                             // redirect to main page.
                                             dialog.dismiss();
-                                            toast = Toast.makeText(getApplicationContext(), "Login Successfully", Toast.LENGTH_SHORT);
-                                            toast.show();
                                             count = 0;
                                             startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                            toast = Toast.makeText(getApplicationContext(), "Login Successfully", Toast.LENGTH_SHORT);
+                                            toast.show();
                                         }
                                         else {
                                             // Signup failed. Look at the ParseException to see what happened.
