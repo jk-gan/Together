@@ -21,7 +21,6 @@ public class LoginActivity extends ActionBarActivity {
     protected EditText usernameField;
     protected EditText passwordField;
     protected Button loginButton;
-    protected Button signupButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
