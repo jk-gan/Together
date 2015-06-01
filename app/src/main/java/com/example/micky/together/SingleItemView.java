@@ -29,12 +29,12 @@ import com.parse.ParseUser;
 
 import java.util.List;
 
-
 public class SingleItemView extends ActionBarActivity {
     // Declare Variables
     private TextView txtname;
     private TextView txtTo;
     private TextView txtFrom;
+    private TextView txtCapacity;
     private String name;
     private String from;
     private String to;
@@ -42,6 +42,7 @@ public class SingleItemView extends ActionBarActivity {
     private String userID;
     private String tripID;
     protected Button joinTripButton;
+    protected Button cancelTripButton;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -64,14 +65,19 @@ public class SingleItemView extends ActionBarActivity {
         txtname = (TextView) findViewById(R.id.nameTextView2);
         txtTo = (TextView) findViewById(R.id.toTextView2);
         txtFrom = (TextView) findViewById(R.id.fromTextView2);
+        txtCapacity = (TextView) findViewById(R.id.capacityTextView2);
 
         // Load the text into the TextView
         txtname.setText(name);
         txtTo.setText(to);
         txtFrom.setText(from);
+        txtCapacity.setText("" + capacity);
 
         // Join button
         joinTripButton = (Button) findViewById(R.id.joinButton);
+
+        // Cancel button
+        cancelTripButton = (Button) findViewById(R.id.cancelButton);
 
         // SELECT * FROM Request WHERE userID = userID AND tripID = tripID
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Request");
@@ -108,24 +114,43 @@ public class SingleItemView extends ActionBarActivity {
                                 request.saveInBackground();
 //                    dialog.dismiss();
                                 Toast toast;
-                                toast = Toast.makeText(getApplicationContext(), "Join Successfully", Toast.LENGTH_SHORT);
-                                toast.show();
-
                                 Intent intent = getIntent();
                                 finish();
                                 startActivity(intent);
+                                toast = Toast.makeText(getApplicationContext(), "Join Successfully", Toast.LENGTH_SHORT);
+                                toast.show();
                             }
                         }
                     });
 
                 } else {
-                    Toast toast;
-                    toast = Toast.makeText(getApplicationContext(), "You had requested for this trip", Toast.LENGTH_SHORT);
-                    toast.show();
+                    cancelTripButton.setVisibility(View.VISIBLE);
+                    cancelTripButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            ParseQuery<ParseObject> query = ParseQuery.getQuery("Request");
+                            query.whereEqualTo("userID", userID);
+                            query.whereEqualTo("tripID", tripID);
+                            query.findInBackground(new FindCallback<ParseObject>() {
+                                public void done(List<ParseObject> users, ParseException e) {
+                                    if (users.size() != 0) {
+                                        users.get(0).deleteInBackground();
+                                        Toast toast;
+                                        Intent intent = getIntent();
+                                        finish();
+                                        startActivity(intent);
+                                        toast = Toast.makeText(
+                                                getApplicationContext(),
+                                                "You had canceled for this trip", Toast.LENGTH_SHORT);
+                                        toast.show();
+                                    }
+                                }
+                            });
+                        }
+                    });
                 }
             }
         });
-
     }
 
     @Override
