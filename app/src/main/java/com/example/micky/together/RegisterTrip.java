@@ -133,7 +133,7 @@ public class RegisterTrip extends ActionBarActivity {
         String capacity = editTextCapacity.getText().toString();
         String description = editTextDescription.getText().toString();
 
-        if (empty() == true){
+        if (empty()){
             Toast.makeText(context,"Please fill all empty fields", duration).show();
         }
         else {
@@ -145,8 +145,8 @@ public class RegisterTrip extends ActionBarActivity {
             tripDetails.put("tripDate", dateTime);
             tripDetails.put("from", from);
             tripDetails.put("to", to);
-            tripDetails.put("defaultCapacity", capacity);
-            tripDetails.put("remainCapacity",capacity);
+            tripDetails.put("defaultCapacity", Integer.parseInt(capacity));
+            tripDetails.put("remainCapacity", Integer.parseInt(capacity));
             tripDetails.put("description", description);
             tripDetails.saveInBackground();
 

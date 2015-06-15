@@ -38,9 +38,11 @@ public class SingleItemView extends ActionBarActivity {
     private TextView txtTo;
     private TextView txtFrom;
     private TextView txtCapacity;
+    private TextView txtTime;
     private String name;
     private String from;
     private String to;
+    private String time;
     private int capacity;
     private String userID;
     private String tripID;
@@ -66,18 +68,21 @@ public class SingleItemView extends ActionBarActivity {
         capacity = i.getIntExtra("capacity", 0);
         tripOwnerID = i.getStringExtra("tripOwnerID");
         userID = ParseUser.getCurrentUser().getObjectId();
+        time = i.getStringExtra("time");
 
         // Locate the TextView in singleitemview.xml
         txtname = (TextView) findViewById(R.id.nameTextView2);
         txtTo = (TextView) findViewById(R.id.toTextView2);
         txtFrom = (TextView) findViewById(R.id.fromTextView2);
         txtCapacity = (TextView) findViewById(R.id.capacityTextView2);
+        txtTime = (TextView) findViewById(R.id.timeTextView2);
 
         // Load the text into the TextView
         txtname.setText(name);
         txtTo.setText(to);
         txtFrom.setText(from);
         txtCapacity.setText("" + capacity);
+        txtTime.setText(time);
 
         if(!userID.equals(tripOwnerID)) {
             // Join button

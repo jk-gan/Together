@@ -116,6 +116,7 @@ public class LoginActivity extends ActionBarActivity {
                                             Toast toast;
                                             toast = Toast.makeText(getApplicationContext(), "Login Failed", Toast.LENGTH_SHORT);
                                             toast.show();
+                                            count++;
                                         }
                                     }
                                 });

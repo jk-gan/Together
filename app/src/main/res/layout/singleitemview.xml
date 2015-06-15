@@ -102,4 +102,23 @@
         android:layout_toRightOf="@+id/capacityTextView"
         android:layout_toEndOf="@+id/capacityTextView" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Time : "
+        android:id="@+id/timeTextView"
+        android:layout_below="@+id/capacityTextView"
+        android:layout_alignLeft="@+id/capacityTextView"
+        android:layout_alignStart="@+id/capacityTextView" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/timeTextView2"
+        android:layout_below="@+id/capacityTextView2"
+        android:layout_toRightOf="@+id/capacityTextView2"
+        android:layout_toEndOf="@+id/capacityTextView2" />
+
 </RelativeLayout>
